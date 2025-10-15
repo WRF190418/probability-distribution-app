@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/probability-distribution-app/static/css/main.02bae592.css",
+    "main.js": "/probability-distribution-app/static/js/main.de04dba5.js",
+    "static/js/453.eeb567b5.chunk.js": "/probability-distribution-app/static/js/453.eeb567b5.chunk.js",
+    "index.html": "/probability-distribution-app/index.html",
+    "main.02bae592.css.map": "/probability-distribution-app/static/css/main.02bae592.css.map",
+    "main.de04dba5.js.map": "/probability-distribution-app/static/js/main.de04dba5.js.map",
+    "453.eeb567b5.chunk.js.map": "/probability-distribution-app/static/js/453.eeb567b5.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.02bae592.css",
+    "static/js/main.de04dba5.js"
+  ]
+}
