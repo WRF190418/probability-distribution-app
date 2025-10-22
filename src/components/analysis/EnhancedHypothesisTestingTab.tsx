@@ -42,7 +42,7 @@ const EnhancedHypothesisTestingTab: React.FC<EnhancedHypothesisTestingTabProps> 
           break;
         
         case 'one-sample-z':
-          result = oneSampleZTest(data, hypothesizedMean, knownVariance, alpha, axis);
+          result = oneSampleZTest(data, hypothesizedMean, knownVariance, alpha, 'two-sided', axis);
           break;
         
         case 'two-sample-t':
@@ -276,14 +276,14 @@ const EnhancedHypothesisTestingTab: React.FC<EnhancedHypothesisTestingTabProps> 
               </div>
               <div className="result-item">
                 <span className="result-label">p值:</span>
-                <span className={`result-value ${tResult.significant ? 'significant' : 'not-significant'}`}>
+                <span className={`result-value ${tResult.pValue < tResult.criticalValue ? 'significant' : 'not-significant'}`}>
                   {tResult.pValue.toFixed(6)}
                 </span>
               </div>
               <div className="result-item">
                 <span className="result-label">显著性:</span>
-                <span className={`result-value ${tResult.significant ? 'significant' : 'not-significant'}`}>
-                  {tResult.significant ? '显著' : '不显著'}
+                <span className={`result-value ${tResult.pValue < tResult.criticalValue ? 'significant' : 'not-significant'}`}>
+                  {tResult.pValue < tResult.criticalValue ? '显著' : '不显著'}
                 </span>
               </div>
               <div className="result-item">
@@ -348,7 +348,7 @@ const EnhancedHypothesisTestingTab: React.FC<EnhancedHypothesisTestingTabProps> 
             <div className="result-grid">
               <div className="result-item">
                 <span className="result-label">均值差异:</span>
-                <span className="result-value">{twoTResult.meanDiff.toFixed(4)}</span>
+                <span className="result-value">{twoTResult.meanDifference.toFixed(4)}</span>
               </div>
               <div className="result-item">
                 <span className="result-label">t统计量:</span>
@@ -360,7 +360,7 @@ const EnhancedHypothesisTestingTab: React.FC<EnhancedHypothesisTestingTabProps> 
               </div>
               <div className="result-item">
                 <span className="result-label">标准误:</span>
-                <span className="result-value">{twoTResult.pooledStdErr.toFixed(4)}</span>
+                <span className="result-value">{twoTResult.pooledStdDev.toFixed(4)}</span>
               </div>
               <div className="result-item">
                 <span className="result-label">p值:</span>
@@ -370,7 +370,7 @@ const EnhancedHypothesisTestingTab: React.FC<EnhancedHypothesisTestingTabProps> 
               </div>
               <div className="result-item">
                 <span className="result-label">显著性:</span>
-                <span className={`result-value ${twoTResult.significant ? 'significant' : 'not-significant'}`}>
+                <span className={`result-value ${twoTResult.pValue < twoTResult.criticalValue ? 'significant' : 'not-significant'}`}>
                   {twoTResult.pValue < twoTResult.criticalValue ? '显著' : '不显著'}
                 </span>
               </div>
