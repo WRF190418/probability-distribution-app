@@ -1,0 +1,58 @@
+# 手动部署到 GitHub Pages 步骤
+
+如果批处理脚本不起作用，请按照以下步骤在命令提示符(CMD)中手动执行部署：
+
+## 1. 打开命令提示符(CMD)作为管理员
+- 点击开始菜单
+- 搜索 "cmd"
+- 右键点击 "命令提示符"
+- 选择 "以管理员身份运行"
+
+## 2. 导航到项目目录
+```
+cd e:\电脑资料\Desktop\AIE\probability-distribution-app
+```
+
+## 3. 修复Git远程仓库配置
+```
+git remote remove origin 2>nul
+```
+```
+git remote add origin https://github.com/heping2007/probability-distribution-app.git
+```
+```
+git remote -v
+```
+
+## 4. 初始化Git仓库(如果尚未初始化)
+```
+if not exist .git (
+    git init
+    git add .
+    git commit -m "Initial commit"
+)
+```
+
+## 5. 安装gh-pages依赖
+```
+npm install --save-dev gh-pages
+```
+
+## 6. 构建项目
+```
+npm run build
+```
+
+## 7. 部署到GitHub Pages
+```
+npm run deploy
+```
+
+## 常见问题处理
+1. 如果出现 "npm 不是内部或外部命令" 错误：请确保Node.js已正确安装并添加到PATH
+2. 如果出现 "git 不是内部或外部命令" 错误：请确保Git已正确安装并添加到PATH
+3. 如果部署失败，请检查错误信息并尝试解决特定问题
+
+## 部署成功后
+访问: https://heping2007.github.io/probability-distribution-app/
+注意：GitHub Pages可能需要几分钟时间来更新。

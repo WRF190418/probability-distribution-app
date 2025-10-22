@@ -1,0 +1,72 @@
+.distribution-generator {
+  padding: 10px 0;
+}
+
+.distribution-selector {
+  margin-bottom: 20px;
+}
+
+.distribution-selector label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #333;
+}
+
+.distribution-select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.sample-size-control {
+  margin-bottom: 20px;
+}
+
+.sample-size-control label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #333;
+}
+
+.distribution-params {
+  margin-bottom: 20px;
+}
+
+.param-group {
+  margin-bottom: 15px;
+}
+
+.param-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #333;
+}
+
+.generate-button {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.generate-button:hover {
+  background-color: #357abd;
+}
+
+.generate-button:active {
+  transform: translateY(1px);
+}
