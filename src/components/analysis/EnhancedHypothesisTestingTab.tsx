@@ -12,7 +12,7 @@ import {
   HypothesisTestResult,
   TestDirection
 } from '../../utils/hypothesisTestingUtils';
-import './HypothesisTestingTab.css';
+import '../modernStyles.css';
 
 type TestType = 'one-sample-t' | 'one-sample-z' | 'two-sample-t' | 'chi-square' | 'normality';
 
@@ -30,7 +30,7 @@ const EnhancedHypothesisTestingTab: React.FC<EnhancedHypothesisTestingTabProps> 
   const [testDirection, setTestDirection] = useState<TestDirection>('two-tailed');
   const [testResult, setTestResult] = useState<any>(null);
   const [secondData, setSecondData] = useState<DataPoint[]>([]);
-  const [expectedDistribution, setExpectedDistribution] = useState<string>('均匀分布');
+  const [expectedDistribution, setExpectedDistribution] = useState<string>('uniform');
 
   const handleRunTest = () => {
     try {
@@ -47,7 +47,7 @@ const EnhancedHypothesisTestingTab: React.FC<EnhancedHypothesisTestingTabProps> 
         
         case 'two-sample-t':
           if (secondaryData.length === 0) {
-            alert('请生成或导入第二组数据');
+            alert('Please generate or import a second dataset');
             return;
           }
           result = twoSampleTTest(data, secondaryData, alpha, axis);
@@ -146,13 +146,13 @@ const EnhancedHypothesisTestingTab: React.FC<EnhancedHypothesisTestingTabProps> 
         return (
           <div className="test-controls">
             <div className="control-group">
-              <label>假设的总体均值 (μ0):</label>
+              <label>Hypothesized Population Mean (μ0):</label>
               <input
                 type="number"
                 value={hypothesizedMean}
                 onChange={(e) => setHypothesizedMean(parseFloat(e.target.value) || 0)}
                 step="0.1"
-                className="number-input"
+                className="glass-input"
               />
             </div>
             <div className="control-group">
@@ -161,9 +161,9 @@ const EnhancedHypothesisTestingTab: React.FC<EnhancedHypothesisTestingTabProps> 
                 value={testDirection}
                 onChange={(e) => setTestDirection(e.target.value as TestDirection)}
               >
-                <option value="two-tailed">双侧检验 (μ ≠ μ0)</option>
-                <option value="left-tailed">左尾检验 (μ &lt; μ0)</option>
-                <option value="right-tailed">右尾检验 (μ &gt; μ0)</option>
+                <option value="two-tailed">Two-tailed Test (μ ≠ μ0)</option>
+                <option value="left-tailed">Left-tailed Test (μ &lt; μ0)</option>
+                <option value="right-tailed">Right-tailed Test (μ &gt; μ0)</option>
               </select>
             </div>
           </div>
@@ -183,14 +183,14 @@ const EnhancedHypothesisTestingTab: React.FC<EnhancedHypothesisTestingTabProps> 
               />
             </div>
             <div className="control-group">
-              <label>已知总体方差 (σ2):</label>
+              <label>Known Population Variance (σ2):</label>
               <input
                 type="number"
                 value={knownVariance}
                 onChange={(e) => setKnownVariance(parseFloat(e.target.value) || 1)}
                 step="0.1"
                 min="0.01"
-                className="number-input"
+                className="glass-input"
               />
             </div>
             <div className="control-group">
@@ -214,10 +214,10 @@ const EnhancedHypothesisTestingTab: React.FC<EnhancedHypothesisTestingTabProps> 
               <p>第二组数据点数: {secondData.length}</p>
               <button 
                 onClick={generateSecondData} 
-                className="generate-button"
+                className="secondary-button glass-btn"
                 disabled={data.length === 0}
               >
-                生成随机第二组数据
+                Generate Random Second Dataset
               </button>
             </div>
             <div className="control-group">
@@ -225,10 +225,11 @@ const EnhancedHypothesisTestingTab: React.FC<EnhancedHypothesisTestingTabProps> 
               <select
                 value={testDirection}
                 onChange={(e) => setTestDirection(e.target.value as TestDirection)}
+                className="glass-input"
               >
-                <option value="two-tailed">双侧检验 (μ1 ≠ μ2)</option>
-                <option value="left-tailed">左尾检验 (μ1 &lt; μ2)</option>
-                <option value="right-tailed">右尾检验 (μ1 &gt; μ2)</option>
+                <option value="two-tailed">Two-tailed Test (μ1 ≠ μ2)</option>
+                <option value="left-tailed">Left-tailed Test (μ1 &lt; μ2)</option>
+                <option value="right-tailed">Right-tailed Test (μ1 &gt; μ2)</option>
               </select>
             </div>
           </div>
@@ -242,10 +243,10 @@ const EnhancedHypothesisTestingTab: React.FC<EnhancedHypothesisTestingTabProps> 
               <select
                 value={expectedDistribution}
                 onChange={(e) => setExpectedDistribution(e.target.value)}
-                className="distribution-select"
+                className="glass-input"
               >
-                <option value="均匀分布">均匀分布</option>
-                <option value="正态分布">正态分布</option>
+                <option value="uniform">Uniform Distribution</option>
+                <option value="normal">Normal Distribution</option>
               </select>
             </div>
           </div>
@@ -263,31 +264,31 @@ const EnhancedHypothesisTestingTab: React.FC<EnhancedHypothesisTestingTabProps> 
       case 'one-sample-t':
         const tResult = testResult as TTestResult;
         return (
-          <div className="test-result">
-            <h3>单样本t检验结果</h3>
+          <div className="test-result card glass">
+            <h3 className="gradient-text">One-Sample T-Test Results</h3>
             <div className="result-grid">
               <div className="result-item">
-                <span className="result-label">t统计量:</span>
+                <span className="result-label">T-Statistic:</span>
                 <span className="result-value">{tResult.tStatistic.toFixed(4)}</span>
               </div>
               <div className="result-item">
-                <span className="result-label">自由度:</span>
+                <span className="result-label">Degrees of Freedom:</span>
                 <span className="result-value">{tResult.degreesOfFreedom}</span>
               </div>
               <div className="result-item">
-                <span className="result-label">p值:</span>
+                <span className="result-label">P-Value:</span>
                 <span className={`result-value ${tResult.pValue < tResult.criticalValue ? 'significant' : 'not-significant'}`}>
                   {tResult.pValue.toFixed(6)}
                 </span>
               </div>
               <div className="result-item">
-                <span className="result-label">显著性:</span>
+                <span className="result-label">Significance:</span>
                 <span className={`result-value ${tResult.pValue < tResult.criticalValue ? 'significant' : 'not-significant'}`}>
-                  {tResult.pValue < tResult.criticalValue ? '显著' : '不显著'}
+                  {tResult.pValue < tResult.criticalValue ? 'Significant' : 'Not Significant'}
                 </span>
               </div>
               <div className="result-item">
-                <span className="result-label">95%置信区间:</span>
+                <span className="result-label">95% Confidence Interval:</span>
                 <span className="result-value">
                   [{tResult.confidenceInterval[0].toFixed(4)}, {tResult.confidenceInterval[1].toFixed(4)}]
                 </span>
@@ -302,32 +303,32 @@ const EnhancedHypothesisTestingTab: React.FC<EnhancedHypothesisTestingTabProps> 
       case 'one-sample-z':
         const zResult = testResult as HypothesisTestResult;
         return (
-          <div className="test-result">
-            <h3>单样本Z检验结果</h3>
+          <div className="test-result card glass">
+            <h3 className="gradient-text">One-Sample Z-Test Results</h3>
             <div className="result-grid">
               <div className="result-item">
-                <span className="result-label">Z统计量:</span>
+                <span className="result-label">Z-Statistic:</span>
                 <span className="result-value">{zResult.statistic.toFixed(4)}</span>
               </div>
               <div className="result-item">
-                <span className="result-label">临界值:</span>
+                <span className="result-label">Critical Value:</span>
                 <span className="result-value">{zResult.criticalValue.toFixed(4)}</span>
               </div>
               <div className="result-item">
-                <span className="result-label">p值:</span>
+                <span className="result-label">P-Value:</span>
                 <span className={`result-value ${zResult.pValue < alpha ? 'significant' : 'not-significant'}`}>
                   {zResult.pValue.toFixed(6)}
                 </span>
               </div>
               <div className="result-item">
-                <span className="result-label">结论:</span>
+                <span className="result-label">Conclusion:</span>
                 <span className={`result-value ${zResult.pValue < alpha ? 'significant' : 'not-significant'}`}>
                   {zResult.conclusion}
                 </span>
               </div>
               {zResult.confidenceInterval && (
                 <div className="result-item">
-                  <span className="result-label">95%置信区间:</span>
+                  <span className="result-label">95% Confidence Interval:</span>
                   <span className="result-value">
                     [{zResult.confidenceInterval[0].toFixed(4)}, {zResult.confidenceInterval[1].toFixed(4)}]
                   </span>
@@ -343,35 +344,35 @@ const EnhancedHypothesisTestingTab: React.FC<EnhancedHypothesisTestingTabProps> 
       case 'two-sample-t':
         const twoTResult = testResult as TwoSampleTTestResult;
         return (
-          <div className="test-result">
-            <h3>独立样本t检验结果</h3>
+          <div className="test-result card glass">
+            <h3 className="gradient-text">Independent Samples T-Test Results</h3>
             <div className="result-grid">
               <div className="result-item">
-                <span className="result-label">均值差异:</span>
+                <span className="result-label">Mean Difference:</span>
                 <span className="result-value">{twoTResult.meanDifference.toFixed(4)}</span>
               </div>
               <div className="result-item">
-                <span className="result-label">t统计量:</span>
+                <span className="result-label">T-Statistic:</span>
                 <span className="result-value">{twoTResult.tStatistic.toFixed(4)}</span>
               </div>
               <div className="result-item">
-                <span className="result-label">自由度:</span>
+                <span className="result-label">Degrees of Freedom:</span>
                 <span className="result-value">{twoTResult.degreesOfFreedom}</span>
               </div>
               <div className="result-item">
-                <span className="result-label">标准误:</span>
+                <span className="result-label">Standard Error:</span>
                 <span className="result-value">{twoTResult.pooledStdDev.toFixed(4)}</span>
               </div>
               <div className="result-item">
-                <span className="result-label">p值:</span>
+                <span className="result-label">P-Value:</span>
                 <span className={`result-value ${twoTResult.pValue < twoTResult.criticalValue ? 'significant' : 'not-significant'}`}>
                   {twoTResult.pValue.toFixed(6)}
                 </span>
               </div>
               <div className="result-item">
-                <span className="result-label">显著性:</span>
+                <span className="result-label">Significance:</span>
                 <span className={`result-value ${twoTResult.pValue < twoTResult.criticalValue ? 'significant' : 'not-significant'}`}>
-                  {twoTResult.pValue < twoTResult.criticalValue ? '显著' : '不显著'}
+                  {twoTResult.pValue < twoTResult.criticalValue ? 'Significant' : 'Not Significant'}
                 </span>
               </div>
             </div>
@@ -384,45 +385,45 @@ const EnhancedHypothesisTestingTab: React.FC<EnhancedHypothesisTestingTabProps> 
       case 'chi-square':
         const chiResult = testResult as ChiSquareTestResult & { observedCounts: number[], expectedCounts: number[] };
         return (
-          <div className="test-result">
-            <h3>卡方拟合优度检验结果</h3>
+          <div className="test-result card glass">
+            <h3 className="gradient-text">Chi-Square Goodness-of-Fit Test Results</h3>
             <div className="result-grid">
               <div className="result-item">
-                <span className="result-label">卡方统计量:</span>
+                <span className="result-label">Chi-Square Statistic:</span>
                 <span className="result-value">{chiResult.chiSquare.toFixed(4)}</span>
               </div>
               <div className="result-item">
-                <span className="result-label">自由度:</span>
+                <span className="result-label">Degrees of Freedom:</span>
                 <span className="result-value">{chiResult.degreesOfFreedom}</span>
               </div>
               <div className="result-item">
-                <span className="result-label">p值:</span>
+                <span className="result-label">P-Value:</span>
                 <span className={`result-value ${chiResult.pValue < chiResult.criticalValue ? 'significant' : 'not-significant'}`}>
                   {chiResult.pValue.toFixed(6)}
                 </span>
               </div>
               <div className="result-item">
-                <span className="result-label">显著性:</span>
+                <span className="result-label">Significance:</span>
                 <span className={`result-value ${chiResult.pValue < chiResult.criticalValue ? 'significant' : 'not-significant'}`}>
-                  {chiResult.pValue < chiResult.criticalValue ? '显著' : '不显著'}
+                  {chiResult.pValue < chiResult.criticalValue ? 'Significant' : 'Not Significant'}
                 </span>
               </div>
             </div>
             
             <div className="frequency-table">
-              <h4>观测与期望频数</h4>
+              <h4>Observed and Expected Frequencies</h4>
               <table>
                 <thead>
                   <tr>
-                    <th>区间</th>
-                    <th>观测频数</th>
-                    <th>期望频数</th>
+                    <th>Interval</th>
+                    <th>Observed Frequency</th>
+                    <th>Expected Frequency</th>
                   </tr>
                 </thead>
                 <tbody>
                   {chiResult.observedCounts.map((observed, index) => (
                     <tr key={index}>
-                      <td>区间 {index + 1}</td>
+                      <td>Interval {index + 1}</td>
                       <td>{observed.toFixed(2)}</td>
                       <td>{chiResult.expectedCounts[index].toFixed(2)}</td>
                     </tr>
@@ -439,19 +440,19 @@ const EnhancedHypothesisTestingTab: React.FC<EnhancedHypothesisTestingTabProps> 
       
       case 'normality':
         return (
-          <div className="test-result">
-            <h3>正态性检验结果</h3>
+          <div className="test-result card glass">
+            <h3 className="gradient-text">Normality Test Results</h3>
             <div className="result-grid">
               <div className="result-item">
-                <span className="result-label">p值:</span>
+                <span className="result-label">P-Value:</span>
                 <span className={`result-value ${testResult.isNormal ? 'not-significant' : 'significant'}`}>
                   {testResult.pValue.toFixed(6)}
                 </span>
               </div>
               <div className="result-item">
-                <span className="result-label">正态分布:</span>
+                <span className="result-label">Normal Distribution:</span>
                 <span className={`result-value ${testResult.isNormal ? 'normal' : 'not-normal'}`}>
-                  {testResult.isNormal ? '是' : '否'}
+                  {testResult.isNormal ? 'Yes' : 'No'}
                 </span>
               </div>
             </div>
@@ -468,41 +469,44 @@ const EnhancedHypothesisTestingTab: React.FC<EnhancedHypothesisTestingTabProps> 
 
   return (
     <div className="hypothesis-testing-tab">
-      <h2>假设检验分析</h2>
+      <h2 className="gradient-text">Hypothesis Testing Analysis</h2>
       
-      <div className="test-configuration">
-        <h3>检验配置</h3>
+      <div className="test-configuration card glass">
+        <h3>Test Configuration</h3>
         <div className="config-grid">
           <div className="config-item">
-            <label>检验类型:</label>
+            <label>Test Type:</label>
             <select 
               value={testType} 
               onChange={(e) => setTestType(e.target.value as TestType)}
+              className="glass-input"
             >
-              <option value="one-sample-t">单样本t检验 (方差未知)</option>
-              <option value="one-sample-z">单样本Z检验 (方差已知)</option>
-              <option value="two-sample-t">双样本t检验</option>
-              <option value="chi-square">卡方拟合优度检验</option>
-              <option value="normality">正态性检验</option>
+              <option value="one-sample-t">One-Sample T-Test (Unknown Variance)</option>
+              <option value="one-sample-z">One-Sample Z-Test (Known Variance)</option>
+              <option value="two-sample-t">Two-Sample T-Test</option>
+              <option value="chi-square">Chi-Square Goodness-of-Fit Test</option>
+              <option value="normality">Normality Test</option>
             </select>
           </div>
 
           <div className="config-item">
-            <label>数据轴:</label>
+            <label>Data Axis:</label>
             <select 
               value={axis} 
               onChange={(e) => setAxis(e.target.value as 'x' | 'y')}
+              className="glass-input"
             >
-              <option value="x">X轴数据</option>
-              <option value="y">Y轴数据</option>
+              <option value="x">X-axis Data</option>
+              <option value="y">Y-axis Data</option>
             </select>
           </div>
 
           <div className="config-item">
-            <label>显著性水平 (alpha):</label>
+            <label>Significance Level (alpha):</label>
             <select 
               value={alpha} 
               onChange={(e) => setAlpha(parseFloat(e.target.value))}
+              className="glass-input"
             >
               <option value={0.01}>0.01 (1%)</option>
               <option value={0.05}>0.05 (5%)</option>
@@ -514,19 +518,19 @@ const EnhancedHypothesisTestingTab: React.FC<EnhancedHypothesisTestingTabProps> 
         {renderTestControls()}
 
         <button 
-          className="run-test-button"
+          className="primary-button glass-btn"
           onClick={handleRunTest}
           disabled={data.length === 0}
         >
-          执行检验
+          Run Test
         </button>
       </div>
 
       {renderTestResult()}
 
       {data.length === 0 && (
-        <div className="no-data-message">
-          <p>请先输入数据以进行假设检验分析</p>
+        <div className="no-data-message card glass">
+          <p>Please input data first to perform hypothesis testing analysis</p>
         </div>
       )}
     </div>

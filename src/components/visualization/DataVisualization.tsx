@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { DataPoint } from '../DataAnalysisApp';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Scatter, ScatterChart, BarChart, Bar } from 'recharts';
-import './DataVisualization.css';
+import '../modernStyles.css';
 
 type ChartType = 'scatter' | 'line' | 'bar';
 
@@ -120,28 +120,28 @@ const DataVisualization: React.FC<DataVisualizationProps> = ({ data = [] }) => {
   const barData = chartType === 'bar' ? prepareBarData() : [];
 
   return (
-    <div className="data-visualization">
+    <div className="data-visualization card glass">
       <div className="visualization-controls">
         <div className="chart-type-selector">
-          <label>图表类型:</label>
+          <label>Chart Type:</label>
           <div className="chart-type-buttons">
             <button
-              className={`chart-type-btn ${chartType === 'scatter' ? 'active' : ''}`}
+              className={`chart-type-btn glass-btn ${chartType === 'scatter' ? 'active' : ''}`}
               onClick={() => setChartType('scatter')}
             >
-              散点图
+              Scatter Plot
             </button>
             <button
-              className={`chart-type-btn ${chartType === 'line' ? 'active' : ''}`}
+              className={`chart-type-btn glass-btn ${chartType === 'line' ? 'active' : ''}`}
               onClick={() => setChartType('line')}
             >
-              折线图
+              Line Chart
             </button>
             <button
-              className={`chart-type-btn ${chartType === 'bar' ? 'active' : ''}`}
+              className={`chart-type-btn glass-btn ${chartType === 'bar' ? 'active' : ''}`}
               onClick={() => setChartType('bar')}
             >
-              柱状图
+              Bar Chart
             </button>
           </div>
         </div>
@@ -154,7 +154,7 @@ const DataVisualization: React.FC<DataVisualizationProps> = ({ data = [] }) => {
                 checked={showRegression}
                 onChange={() => setShowRegression(!showRegression)}
               />
-              <span className="checkbox-text">显示回归线</span>
+              <span className="checkbox-text">Show Regression Line</span>
             </label>
           </div>
         )}
@@ -172,13 +172,13 @@ const DataVisualization: React.FC<DataVisualizationProps> = ({ data = [] }) => {
                     type="number" 
                     dataKey="x" 
                     name="X" 
-                    label={{ value: 'X值', position: 'insideBottomRight', offset: -10 }} 
+                    label={{ value: 'X Value', position: 'insideBottomRight', offset: -10 }} 
                   />
                   <YAxis 
                     type="number" 
                     dataKey="y" 
                     name="Y" 
-                    label={{ value: 'Y值', angle: -90, position: 'insideLeft' }} 
+                    label={{ value: 'Y Value', angle: -90, position: 'insideLeft' }} 
                   />
                   <Tooltip 
                     cursor={{ strokeDasharray: '3 3' }}
@@ -239,7 +239,7 @@ const DataVisualization: React.FC<DataVisualizationProps> = ({ data = [] }) => {
                       dataKey="y" 
                       stroke="#f44336" 
                       strokeWidth={2} 
-                      name={`回归线: ${regression.equation || 'N/A'}`}
+                      name={`Regression: ${regression.equation || 'N/A'}`}
                       dot={false}
                       strokeDasharray="5 5"
                     />
@@ -284,12 +284,12 @@ const DataVisualization: React.FC<DataVisualizationProps> = ({ data = [] }) => {
                   <Legend />
                   <Line 
                     type="monotone" 
-                    dataKey="y" 
-                    stroke="#4a90e2" 
-                    strokeWidth={2} 
-                    name="Y值"
-                    dot={{ r: 3 }}
-                    activeDot={{ r: 5 }}
+                  dataKey="y" 
+                  stroke="#4a90e2" 
+                  strokeWidth={2} 
+                  name="Y Value"
+                  dot={{ r: 3 }}
+                  activeDot={{ r: 5 }}
                   />
                   {regression && Array.isArray(regression.lineData) && regression.lineData.length > 0 && (
                     <Line 
@@ -315,27 +315,27 @@ const DataVisualization: React.FC<DataVisualizationProps> = ({ data = [] }) => {
                   <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
                   <XAxis 
                     dataKey="label" 
-                    name="X范围" 
-                    angle={-45} 
-                    textAnchor="end" 
-                    height={70}
-                    label={{ value: 'X范围', position: 'insideBottom', offset: -10 }} 
+                  name="X Range" 
+                  angle={-45} 
+                  textAnchor="end" 
+                  height={70}
+                  label={{ value: 'X Range', position: 'insideBottom', offset: -10 }} 
                   />
                   <YAxis 
                     type="number" 
-                    name="频次" 
-                    label={{ value: '频次', angle: -90, position: 'insideLeft' }} 
+                  name="Frequency" 
+                  label={{ value: 'Frequency', angle: -90, position: 'insideLeft' }} 
                   />
                   <Tooltip 
-                    formatter={(value) => [`频次: ${typeof value === 'number' ? value : 0}`, '']}
-                    labelFormatter={(value) => `范围: ${value || 'N/A'}`}
+                    formatter={(value) => [`Frequency: ${typeof value === 'number' ? value : 0}`, '']}
+                  labelFormatter={(value) => `Range: ${value || 'N/A'}`}
                   />
                   <Legend />
                   <Bar 
                     dataKey="count" 
-                    fill="#4a90e2" 
-                    name="频次"
-                    radius={[4, 4, 0, 0]}
+                  fill="#4a90e2" 
+                  name="Frequency"
+                  radius={[4, 4, 0, 0]}
                   />
                 </BarChart>
               );
@@ -358,8 +358,8 @@ const DataVisualization: React.FC<DataVisualizationProps> = ({ data = [] }) => {
       </div>
 
       {regression && regression.equation && (
-        <div className="regression-info">
-          <p>回归方程: {regression.equation}</p>
+        <div className="regression-info card glass">
+          <p className="gradient-text">Regression Equation: {regression.equation}</p>
         </div>
       )}
     </div>
